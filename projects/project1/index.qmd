@@ -1,0 +1,36 @@
+---
+title: "Analysis of Cars"
+author: Your Name
+date: today
+---
+
+# Header
+
+Let's investigate the relationship between fuel efficiency (`mpg`) and engine displacement (`disp`) from the `mtcars` dataset. Those variables have a correlation of `r cor(mtcars$mpg, mtcars$disp) |> format(digits=2)`.
+
+## Sub-Header
+
+Here is a plot:
+
+```{python}
+#| message: false
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load mtcars dataset
+mtcars = sns.load_dataset('mpg').dropna()
+
+# Calculate displacement from horsepower and cylinders (approximate if mtcars isn't available)
+# But here we use seaborn's mpg dataset which has similar variables
+
+# Plot
+plt.figure(figsize=(8, 5))
+sns.scatterplot(data=mtcars, x='mpg', y='displacement', color='dodgerblue')
+plt.title("MPG vs Displacement")
+plt.xlabel("Miles Per Gallon (mpg)")
+plt.ylabel("Engine Displacement")
+plt.tight_layout()
+plt.show()
+```

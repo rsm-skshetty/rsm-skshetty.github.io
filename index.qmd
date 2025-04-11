@@ -1,0 +1,13 @@
+---
+title: "Samiksha Shetty"
+image: "files/profile_pic.jpg"
+about:
+  template: jolla
+  links:
+    - icon: envelope
+      href: mailto:skshetty@ucsd.edu
+    - icon: linkedin
+      href: http://www.linkedin.com/in/shettysamiksha
+---
+
+Welcome to my website!

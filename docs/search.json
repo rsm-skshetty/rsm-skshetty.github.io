@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Samiksha Shetty",
+    "section": "",
+    "text": "Welcome to my website!"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "My Resume",
+    "section": "",
+    "text": "Download PDF file."
+  },
+  {
+    "objectID": "projects/project1/index.html",
+    "href": "projects/project1/index.html",
+    "title": "Analysis of Cars",
+    "section": "",
+    "text": "Let’s investigate the relationship between fuel efficiency (mpg) and engine displacement (disp) from the mtcars dataset. Those variables have a correlation of r cor(mtcars$mpg, mtcars$disp) |&gt; format(digits=2).\n\n\nHere is a plot:\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Load mtcars dataset\nmtcars = sns.load_dataset('mpg').dropna()\n\n# Calculate displacement from horsepower and cylinders (approximate if mtcars isn't available)\n# But here we use seaborn's mpg dataset which has similar variables\n\n# Plot\nplt.figure(figsize=(8, 5))\nsns.scatterplot(data=mtcars, x='mpg', y='displacement', color='dodgerblue')\nplt.title(\"MPG vs Displacement\")\nplt.xlabel(\"Miles Per Gallon (mpg)\")\nplt.ylabel(\"Engine Displacement\")\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "projects/project1/index.html#sub-header",
+    "href": "projects/project1/index.html#sub-header",
+    "title": "Analysis of Cars",
+    "section": "",
+    "text": "Here is a plot:\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Load mtcars dataset\nmtcars = sns.load_dataset('mpg').dropna()\n\n# Calculate displacement from horsepower and cylinders (approximate if mtcars isn't available)\n# But here we use seaborn's mpg dataset which has similar variables\n\n# Plot\nplt.figure(figsize=(8, 5))\nsns.scatterplot(data=mtcars, x='mpg', y='displacement', color='dodgerblue')\nplt.title(\"MPG vs Displacement\")\nplt.xlabel(\"Miles Per Gallon (mpg)\")\nplt.ylabel(\"Engine Displacement\")\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "My Projects",
+    "section": "",
+    "text": "Analysis of Cars\n\n\n\n\nYour Name\nApr 7, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+  }
+]
