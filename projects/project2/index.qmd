@@ -1,0 +1,5 @@
+---
+title: "Project 2"
+description: "Marketing Analytics Project 2 – Predictive Modeling"
+format: html
+---
