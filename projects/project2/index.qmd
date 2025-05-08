@@ -45,7 +45,7 @@ patent_counts = blueprinty_data.groupby(['patent_bin', 'iscustomer']).size().uns
 patent_props = patent_counts.div(patent_counts.sum(axis=1), axis=0)
 
 # Plot
-patent_props.plot(kind='bar', figsize=(8, 6), width=0.8)
+patent_props.plot(kind='bar', figsize=(8, 6), width=0.8, color=['#efc0fc', '#c0e861'])
 plt.title('Proportion of Firms by Patent Bin and Customer Status')
 plt.xlabel('Number of Patents (Binned)')
 plt.ylabel('Proportion of Firms')
@@ -75,7 +75,7 @@ import matplotlib.pyplot as plt
 
 # Boxplot of age by customer status
 plt.figure(figsize=(7, 5))
-sns.boxplot(x='iscustomer', y='age', data=blueprinty_data, color='slateblue')
+sns.boxplot(x='iscustomer', y='age', data=blueprinty_data, palette=["#efc0fc", "#c3ff63"])
 plt.title("Firm Age by Blueprinty Customer Status")
 plt.xlabel("Is Customer (0 = No, 1 = Yes)")
 plt.ylabel("Firm Age (Years)")
