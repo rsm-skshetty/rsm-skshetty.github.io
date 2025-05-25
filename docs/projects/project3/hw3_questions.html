@@ -191,6 +191,7 @@ window.Quarto = {
   <li><a href="#estimation-via-bayesian-methods" id="toc-estimation-via-bayesian-methods" class="nav-link" data-scroll-target="#estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</a>
   <ul class="collapse">
   <li><a href="#posterior-diagnostics-for-beta_price" id="toc-posterior-diagnostics-for-beta_price" class="nav-link" data-scroll-target="#posterior-diagnostics-for-beta_price">Posterior Diagnostics for <code>beta_price</code></a></li>
+  <li><a href="#interpretation-of-posterior-estimates" id="toc-interpretation-of-posterior-estimates" class="nav-link" data-scroll-target="#interpretation-of-posterior-estimates">Interpretation of Posterior Estimates</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">6. Discussion</a>
   <ul class="collapse">
@@ -278,7 +279,7 @@ Note
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="a9a04656" class="cell" data-execution_count="1">
+<div id="fffa6514" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -347,7 +348,7 @@ Note
 <section id="preparing-the-data-for-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="preparing-the-data-for-estimation">3. Preparing the Data for Estimation</h2>
 <p>The “hard part” of the MNL likelihood function is organizing the data, as we need to keep track of 3 dimensions (consumer <span class="math inline">\(i\)</span>, covariate <span class="math inline">\(k\)</span>, and product <span class="math inline">\(j\)</span>) instead of the typical 2 dimensions for cross-sectional regression models (consumer <span class="math inline">\(i\)</span> and covariate <span class="math inline">\(k\)</span>). The fact that each task for each respondent has the same number of alternatives (3) helps. In addition, we need to convert the categorical variables for brand and ads into binary variables.</p>
-<div id="8bfc5ec7" class="cell" data-execution_count="2">
+<div id="2c8aec6a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -391,7 +392,7 @@ Example y (first 3 values):
 </section>
 <section id="estimation-via-maximum-likelihood" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</h2>
-<div id="eb42ea47" class="cell" data-execution_count="3">
+<div id="83ed4161" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -422,7 +423,7 @@ Example y (first 3 values):
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>log_likelihood  <span class="co"># negative for minimization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f37ec33d" class="cell" data-execution_count="4">
+<div id="f71bae86" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numdifftools <span class="im">as</span> nd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -484,7 +485,7 @@ Example y (first 3 values):
 </section>
 <section id="estimation-via-bayesian-methods" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</h2>
-<div id="1210fc7b" class="cell" data-execution_count="5">
+<div id="c3765b47" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -561,7 +562,7 @@ Step 9000: log-posterior = -2284.94
 Step 10000: log-posterior = -2285.55</code></pre>
 </div>
 </div>
-<div id="ecb8c095" class="cell" data-execution_count="6">
+<div id="e6645fa4" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
@@ -594,7 +595,12 @@ Step 10000: log-posterior = -2285.55</code></pre>
 </div>
 </div>
 </div>
-<div id="99234058" class="cell" data-execution_count="7">
+<section id="posterior-diagnostics-for-beta_price" class="level3">
+<h3 class="anchored" data-anchor-id="posterior-diagnostics-for-beta_price">Posterior Diagnostics for <code>beta_price</code></h3>
+<p>The <strong>trace plot</strong> for <code>beta_price</code> shows good mixing and stability over the 10,000 retained MCMC samples. The chain fluctuates around a consistent mean without drifting, suggesting convergence to the posterior distribution.</p>
+<p>The <strong>posterior distribution</strong> is approximately normal, centered around –0.065, indicating a clear negative effect of price on utility. The distribution is tight, which reflects high certainty about the price sensitivity.</p>
+<p>These diagnostics confirm that the Metropolis-Hastings sampler performed well and that <code>beta_price</code> is reliably estimated from the data.</p>
+<div id="d9df18b0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>param_names <span class="op">=</span> [<span class="st">"beta_netflix"</span>, <span class="st">"beta_prime"</span>, <span class="st">"beta_ads"</span>, <span class="st">"beta_price"</span>]</span>
@@ -614,11 +620,17 @@ beta_ads           -0.476692      0.067661     -0.608999     -0.346079
 beta_price         -0.063835      0.004467     -0.072503     -0.055189</code></pre>
 </div>
 </div>
-<section id="posterior-diagnostics-for-beta_price" class="level3">
-<h3 class="anchored" data-anchor-id="posterior-diagnostics-for-beta_price">Posterior Diagnostics for <code>beta_price</code></h3>
-<p>The <strong>trace plot</strong> for <code>beta_price</code> shows good mixing and stability over the 10,000 retained MCMC samples. The chain fluctuates around a consistent mean without drifting, suggesting convergence to the posterior distribution.</p>
-<p>The <strong>posterior distribution</strong> is approximately normal, centered around –0.065, indicating a clear negative effect of price on utility. The distribution is tight, which reflects high certainty about the price sensitivity.</p>
-<p>These diagnostics confirm that the Metropolis-Hastings sampler performed well and that <code>beta_price</code> is reliably estimated from the data.</p>
+</section>
+<section id="interpretation-of-posterior-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-posterior-estimates">Interpretation of Posterior Estimates</h3>
+<p>The posterior summaries for each parameter are as follows:</p>
+<ul>
+<li><strong><code>beta_netflix</code> (0.6650)</strong> has a 95% credible interval of [0.5009, 0.8382], indicating that Netflix is significantly preferred over the baseline (Hulu).</li>
+<li><strong><code>beta_prime</code> (0.3305)</strong> is also positive and significant, but lower than Netflix, suggesting that consumers prefer Prime over Hulu, but not as much as they prefer Netflix.</li>
+<li><strong><code>beta_ads</code> (–0.4767)</strong> has a negative effect with a credible interval of [–0.7090, –0.3461], showing that respondents clearly dislike advertisements.</li>
+<li><strong><code>beta_price</code> (–0.0638)</strong> is tightly estimated with a narrow interval [–0.0725, –0.0552], confirming strong and consistent price sensitivity.</li>
+</ul>
+<p>All posterior credible intervals exclude zero, indicating strong evidence for the direction and significance of each effect. These estimates are also highly consistent with the MLE results and the true part-worth utilities used in the simulation.</p>
 </section>
 </section>
 <section id="discussion" class="level2">
@@ -637,7 +649,7 @@ beta_price         -0.063835      0.004467     -0.072503     -0.055189</code></p
 <hr>
 <section id="extending-to-a-hierarchical-multi-level-model" class="level3">
 <h3 class="anchored" data-anchor-id="extending-to-a-hierarchical-multi-level-model">Extending to a Hierarchical (Multi-Level) Model</h3>
-<p>To simulate data from — and estimate parameters of — a <strong>multi-level</strong> (aka <strong>random-parameter</strong> or <strong>hierarchical</strong>) multinomial logit model, we need to introduce <strong>individual-level heterogeneity</strong> in preferences.</p>
+<p>To simulate data from — and estimate parameters of — a <strong>multi-level</strong> (aka random-parameter or hierarchical) multinomial logit model, we need to introduce <strong>individual-level heterogeneity</strong> in preferences.</p>
 </section>
 <section id="simulation-changes" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-changes">Simulation Changes</h3>

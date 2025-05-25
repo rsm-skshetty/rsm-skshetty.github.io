@@ -244,7 +244,7 @@ window.Quarto = {
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<div id="99a1d6e5" class="cell" data-execution_count="1">
+<div id="41f6c97f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>blueprinty_data <span class="op">=</span> pd.read_csv(<span class="st">"blueprinty.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>blueprinty_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -304,7 +304,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="3a097084" class="cell" data-execution_count="2">
+<div id="04ecd260" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute mean number of patents for customers and non-customers</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mean_patents <span class="op">=</span> blueprinty_data.groupby(<span class="st">'iscustomer'</span>)[<span class="st">'patents'</span>].mean()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mean_patents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -315,7 +315,7 @@ window.Quarto = {
 Name: patents, dtype: float64</code></pre>
 </div>
 </div>
-<div id="7b38dee2" class="cell" data-execution_count="3">
+<div id="c0a9ed1c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin the number of patents into intervals of size 2</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>blueprinty_data[<span class="st">'patent_bin'</span>] <span class="op">=</span> pd.cut(</span>
@@ -341,7 +341,7 @@ Name: patents, dtype: float64</code></pre>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_26098/127601338.py:10: FutureWarning:
+<pre><code>/tmp/ipykernel_227193/127601338.py:10: FutureWarning:
 
 The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
 </code></pre>
@@ -363,7 +363,7 @@ The default of observed=False is deprecated and will be changed to True in a fut
 </ul>
 <p>This pattern suggests that firms using Blueprinty’s software are <strong>more successful in obtaining patents</strong>, supporting the hypothesis that Blueprinty’s product contributes to improved patenting outcomes.</p>
 <p>Blueprinty customers are not selected at random. It may be important to account for systematic differences in the age and regional location of customers vs non-customers.</p>
-<div id="1638de7d" class="cell" data-execution_count="4">
+<div id="55e2e818" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -376,7 +376,7 @@ The default of observed=False is deprecated and will be changed to True in a fut
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_26098/3056778016.py:6: FutureWarning:
+<pre><code>/tmp/ipykernel_227193/3056778016.py:6: FutureWarning:
 
 
 
@@ -400,7 +400,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </li>
 <li>This suggests that <strong>more established firms</strong> may be more likely to adopt Blueprinty’s software.</li>
 </ul>
-<div id="89bb8300" class="cell" data-execution_count="5">
+<div id="e13ecde1" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crosstab of customer status by region</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>region_counts <span class="op">=</span> pd.crosstab(blueprinty_data[<span class="st">'region'</span>], blueprinty_data[<span class="st">'iscustomer'</span>])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -504,7 +504,7 @@ L(\lambda \mid Y_1, \dots, Y_n) = \prod_{i=1}^n \frac{e^{-\lambda} \lambda^{Y_i}
 <p><span class="math display">\[
 \ell(\lambda) = \sum_{i=1}^n \left[ -\lambda + Y_i \log(\lambda) - \log(Y_i!) \right]
 \]</span></p>
-<div id="c8884ba6" class="cell" data-execution_count="6">
+<div id="df78f3fb" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> factorial</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -521,7 +521,7 @@ L(\lambda \mid Y_1, \dots, Y_n) = \prod_{i=1}^n \frac{e^{-\lambda} \lambda^{Y_i}
 </div>
 </div>
 <p>This number by itself isn’t “good” or “bad” — it’s just <strong>one point on the log-likelihood curve</strong>. The goal now is to find the value of <span class="math inline">\(\lambda\)</span> that <strong>maximizes this log-likelihood</strong> — that is, the <strong>Maximum Likelihood Estimate (MLE)</strong> of <span class="math inline">\(\lambda\)</span>.</p>
-<div id="2ab2c80c" class="cell" data-execution_count="7">
+<div id="97a1dcd3" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -571,7 +571,7 @@ L(\lambda \mid Y_1, \dots, Y_n) = \prod_{i=1}^n \frac{e^{-\lambda} \lambda^{Y_i}
 \hat{\lambda}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n Y_i = \bar{Y}
 \]</span></p>
 <p>This result makes intuitive sense: for a Poisson distribution, the mean and the variance are both equal to <span class="math inline">\(\lambda\)</span>, so it’s natural that the MLE is the sample mean.</p>
-<div id="1e2343ed" class="cell" data-execution_count="8">
+<div id="1110403a" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the negative log-likelihood</span></span>
@@ -601,7 +601,7 @@ L(\lambda \mid Y_1, \dots, Y_n) = \prod_{i=1}^n \frac{e^{-\lambda} \lambda^{Y_i}
 <section id="estimation-of-poisson-regression-model" class="level3">
 <h3 class="anchored" data-anchor-id="estimation-of-poisson-regression-model">Estimation of Poisson Regression Model</h3>
 <p>Next, we extend our simple Poisson model to a Poisson Regression Model such that <span class="math inline">\(Y_i = \text{Poisson}(\lambda_i)\)</span> where <span class="math inline">\(\lambda_i = \exp(X_i'\beta)\)</span>. The interpretation is that the success rate of patent awards is not constant across all firms (<span class="math inline">\(\lambda\)</span>) but rather is a function of firm characteristics <span class="math inline">\(X_i\)</span>. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.</p>
-<div id="7650d003" class="cell" data-execution_count="9">
+<div id="0e4c42c4" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> gammaln</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -614,7 +614,7 @@ L(\lambda \mid Y_1, \dots, Y_n) = \prod_{i=1}^n \frac{e^{-\lambda} \lambda^{Y_i}
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    lambda_i <span class="op">=</span> np.array([math.exp(val) <span class="cf">for</span> val <span class="kw">in</span> Xb])  <span class="co"># Use math.exp for robustness</span></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(<span class="op">-</span>lambda_i <span class="op">+</span> Y <span class="op">*</span> Xb <span class="op">-</span> gammaln(Y <span class="op">+</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="01485e79" class="cell" data-execution_count="10">
+<div id="db335d5c" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numdifftools <span class="im">as</span> nd</span>
@@ -727,7 +727,7 @@ L(\lambda \mid Y_1, \dots, Y_n) = \prod_{i=1}^n \frac{e^{-\lambda} \lambda^{Y_i}
 </div>
 </div>
 </div>
-<div id="10430500" class="cell" data-execution_count="11">
+<div id="9df6e85a" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop intercept column and ensure all columns are float</span></span>
@@ -878,7 +878,7 @@ Baseline expected patent count is about <code>exp(1.34) ≈ 3.83</code> for a no
 <section id="conclusion" class="level4">
 <h4 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h4>
 <p>Blueprinty customers tend to have more patents, even after adjusting for age and region. This effect is both <strong>statistically significant</strong> and <strong>economically meaningful</strong>. The concave age effect suggests mid-aged firms are the most patent-productive. Geographic region shows no strong effect, indicating that Blueprinty’s impact is consistent across locations.</p>
-<div id="13ab6961" class="cell" data-execution_count="12">
+<div id="f24edf4c" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make two versions of the design matrix:</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># X_0: all firms set to iscustomer = 0</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># X_1: all firms set to iscustomer = 1</span></span>
@@ -950,7 +950,7 @@ Variable Definitions
 </div>
 </div>
 </div>
-<div id="6c9d796e" class="cell" data-execution_count="13">
+<div id="85d84294" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -1024,7 +1024,7 @@ Variable Definitions
 <h4 class="anchored" data-anchor-id="number-of-reviews-vs.-price">Number of Reviews vs.&nbsp;Price</h4>
 <p>The scatterplot of reviews vs.&nbsp;price shows a <strong>negative trend</strong>: - Listings priced <strong>under $100</strong> tend to have <strong>more reviews</strong>. - As price increases, the number of reviews generally <strong>decreases</strong>. - There is <strong>high variance</strong> among cheaper listings, suggesting other factors (e.g.&nbsp;cleanliness, location) influence popularity.</p>
 <p>Together, these visuals suggest that <strong>lower-priced</strong>, <strong>clean</strong>, and <strong>moderately-sized</strong> listings in <strong>popular formats (entire homes, private rooms)</strong> tend to receive more reviews — supporting their inclusion in the Poisson regression model.</p>
-<div id="3b859ecc" class="cell" data-execution_count="14">
+<div id="cfc450c2" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows with missing values in any of the relevant columns</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>cols)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1047,7 +1047,7 @@ instant_bookable             0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="0fde920a" class="cell" data-execution_count="15">
+<div id="29ee7cd6" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
