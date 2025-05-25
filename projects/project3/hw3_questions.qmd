@@ -401,7 +401,7 @@ Yes, it makes perfect sense. A negative value for `β_price` implies that as the
 
 ### Extending to a Hierarchical (Multi-Level) Model
 
-To simulate data from — and estimate parameters of — a **multi-level** (aka **random-parameter** or **hierarchical**) multinomial logit model, we need to introduce **individual-level heterogeneity** in preferences.
+To simulate data from — and estimate parameters of — a **multi-level** (aka random-parameter or hierarchical) multinomial logit model, we need to introduce **individual-level heterogeneity** in preferences.
 
 
 ### Simulation Changes
