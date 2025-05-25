@@ -343,6 +343,16 @@ plt.ylabel("Density")
 plt.grid(True)
 plt.show()
 ```
+
+### Posterior Diagnostics for `beta_price`
+
+The **trace plot** for `beta_price` shows good mixing and stability over the 10,000 retained MCMC samples. The chain fluctuates around a consistent mean without drifting, suggesting convergence to the posterior distribution.
+
+The **posterior distribution** is approximately normal, centered around –0.065, indicating a clear negative effect of price on utility. The distribution is tight, which reflects high certainty about the price sensitivity.
+
+These diagnostics confirm that the Metropolis-Hastings sampler performed well and that `beta_price` is reliably estimated from the data.
+
+
 ```{python}
 import pandas as pd
 
@@ -357,13 +367,16 @@ summary.columns = ["Posterior Mean", "Posterior SD", "95% CI Lower", "95% CI Upp
 print(summary)
 
 ```
-### Posterior Diagnostics for `beta_price`
+### Interpretation of Posterior Estimates
 
-The **trace plot** for `beta_price` shows good mixing and stability over the 10,000 retained MCMC samples. The chain fluctuates around a consistent mean without drifting, suggesting convergence to the posterior distribution.
+The posterior summaries for each parameter are as follows:
 
-The **posterior distribution** is approximately normal, centered around –0.065, indicating a clear negative effect of price on utility. The distribution is tight, which reflects high certainty about the price sensitivity.
+- **`beta_netflix` (0.6650)** has a 95% credible interval of [0.5009, 0.8382], indicating that Netflix is significantly preferred over the baseline (Hulu).
+- **`beta_prime` (0.3305)** is also positive and significant, but lower than Netflix, suggesting that consumers prefer Prime over Hulu, but not as much as they prefer Netflix.
+- **`beta_ads` (–0.4767)** has a negative effect with a credible interval of [–0.7090, –0.3461], showing that respondents clearly dislike advertisements.
+- **`beta_price` (–0.0638)** is tightly estimated with a narrow interval [–0.0725, –0.0552], confirming strong and consistent price sensitivity.
 
-These diagnostics confirm that the Metropolis-Hastings sampler performed well and that `beta_price` is reliably estimated from the data.
+All posterior credible intervals exclude zero, indicating strong evidence for the direction and significance of each effect. These estimates are also highly consistent with the MLE results and the true part-worth utilities used in the simulation.
 
 
 ## 6. Discussion
