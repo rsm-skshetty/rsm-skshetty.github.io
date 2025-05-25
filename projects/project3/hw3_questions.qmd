@@ -1,7 +1,7 @@
 ---
 title: "Multinomial Logit Model"
 author: "Samiksha"
-date: today
+date: 05/25/2025
 ---
 
 
@@ -247,6 +247,12 @@ ci_table = pd.DataFrame({
 print(ci_table)
 ```
 
+### Interpretation of MLE Output
+
+- **`beta_netflix` (0.6655)** and **`beta_prime` (0.3289)** are both positive and significant, indicating a preference for Netflix and Prime over the baseline (Hulu), with Netflix being preferred more strongly.
+- **`beta_ads` (–0.4749)** is negative and significant, suggesting that respondents dislike ads.
+- **`beta_price` (–0.0637)** is also negative and tightly estimated, showing that higher prices reduce the likelihood of choice.
+- Overall, the estimates have the correct signs and align closely with the true parameters used in simulation, though slightly conservative — as is typical in finite-sample MNL models.
 
 
 ## 5. Estimation via Bayesian Methods
@@ -351,6 +357,13 @@ summary.columns = ["Posterior Mean", "Posterior SD", "95% CI Lower", "95% CI Upp
 print(summary)
 
 ```
+### Posterior Diagnostics for `beta_price`
+
+The **trace plot** for `beta_price` shows good mixing and stability over the 10,000 retained MCMC samples. The chain fluctuates around a consistent mean without drifting, suggesting convergence to the posterior distribution.
+
+The **posterior distribution** is approximately normal, centered around –0.065, indicating a clear negative effect of price on utility. The distribution is tight, which reflects high certainty about the price sensitivity.
+
+These diagnostics confirm that the Metropolis-Hastings sampler performed well and that `beta_price` is reliably estimated from the data.
 
 
 ## 6. Discussion
@@ -393,7 +406,6 @@ Instead of assigning one global $\beta$ to all respondents, we would:
 
 This reflects real-world behavior more accurately, since different people value price and features differently.
 
----
 
 ### Estimation Changes
 
@@ -409,7 +421,6 @@ To estimate this model, we would:
 
 We can implement this in tools like **Stan**, **PyMC**, or via custom code if needed.
 
----
 
 ### Why Use Hierarchical Models?
 

@@ -184,8 +184,14 @@ window.Quarto = {
   <li><a href="#likelihood-for-the-multi-nomial-logit-mnl-model" id="toc-likelihood-for-the-multi-nomial-logit-mnl-model" class="nav-link active" data-scroll-target="#likelihood-for-the-multi-nomial-logit-mnl-model">1. Likelihood for the Multi-nomial Logit (MNL) Model</a></li>
   <li><a href="#simulate-conjoint-data" id="toc-simulate-conjoint-data" class="nav-link" data-scroll-target="#simulate-conjoint-data">2. Simulate Conjoint Data</a></li>
   <li><a href="#preparing-the-data-for-estimation" id="toc-preparing-the-data-for-estimation" class="nav-link" data-scroll-target="#preparing-the-data-for-estimation">3. Preparing the Data for Estimation</a></li>
-  <li><a href="#estimation-via-maximum-likelihood" id="toc-estimation-via-maximum-likelihood" class="nav-link" data-scroll-target="#estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</a></li>
-  <li><a href="#estimation-via-bayesian-methods" id="toc-estimation-via-bayesian-methods" class="nav-link" data-scroll-target="#estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</a></li>
+  <li><a href="#estimation-via-maximum-likelihood" id="toc-estimation-via-maximum-likelihood" class="nav-link" data-scroll-target="#estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-of-mle-output" id="toc-interpretation-of-mle-output" class="nav-link" data-scroll-target="#interpretation-of-mle-output">Interpretation of MLE Output</a></li>
+  </ul></li>
+  <li><a href="#estimation-via-bayesian-methods" id="toc-estimation-via-bayesian-methods" class="nav-link" data-scroll-target="#estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</a>
+  <ul class="collapse">
+  <li><a href="#posterior-diagnostics-for-beta_price" id="toc-posterior-diagnostics-for-beta_price" class="nav-link" data-scroll-target="#posterior-diagnostics-for-beta_price">Posterior Diagnostics for <code>beta_price</code></a></li>
+  </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">6. Discussion</a>
   <ul class="collapse">
   <li><a href="#extending-to-a-hierarchical-multi-level-model" id="toc-extending-to-a-hierarchical-multi-level-model" class="nav-link" data-scroll-target="#extending-to-a-hierarchical-multi-level-model">Extending to a Hierarchical (Multi-Level) Model</a></li>
@@ -272,7 +278,7 @@ Note
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="a9f9c717" class="cell" data-execution_count="1">
+<div id="a9a04656" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -341,7 +347,7 @@ Note
 <section id="preparing-the-data-for-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="preparing-the-data-for-estimation">3. Preparing the Data for Estimation</h2>
 <p>The “hard part” of the MNL likelihood function is organizing the data, as we need to keep track of 3 dimensions (consumer <span class="math inline">\(i\)</span>, covariate <span class="math inline">\(k\)</span>, and product <span class="math inline">\(j\)</span>) instead of the typical 2 dimensions for cross-sectional regression models (consumer <span class="math inline">\(i\)</span> and covariate <span class="math inline">\(k\)</span>). The fact that each task for each respondent has the same number of alternatives (3) helps. In addition, we need to convert the categorical variables for brand and ads into binary variables.</p>
-<div id="5978515c" class="cell" data-execution_count="2">
+<div id="8bfc5ec7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -385,7 +391,7 @@ Example y (first 3 values):
 </section>
 <section id="estimation-via-maximum-likelihood" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</h2>
-<div id="b35a6376" class="cell" data-execution_count="3">
+<div id="eb42ea47" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -416,7 +422,7 @@ Example y (first 3 values):
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>log_likelihood  <span class="co"># negative for minimization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="06a6485b" class="cell" data-execution_count="4">
+<div id="f37ec33d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numdifftools <span class="im">as</span> nd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -466,10 +472,19 @@ Example y (first 3 values):
 3    beta_price -0.063683    0.004412     -0.072331     -0.055035</code></pre>
 </div>
 </div>
+<section id="interpretation-of-mle-output" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-mle-output">Interpretation of MLE Output</h3>
+<ul>
+<li><strong><code>beta_netflix</code> (0.6655)</strong> and <strong><code>beta_prime</code> (0.3289)</strong> are both positive and significant, indicating a preference for Netflix and Prime over the baseline (Hulu), with Netflix being preferred more strongly.</li>
+<li><strong><code>beta_ads</code> (–0.4749)</strong> is negative and significant, suggesting that respondents dislike ads.</li>
+<li><strong><code>beta_price</code> (–0.0637)</strong> is also negative and tightly estimated, showing that higher prices reduce the likelihood of choice.</li>
+<li>Overall, the estimates have the correct signs and align closely with the true parameters used in simulation, though slightly conservative — as is typical in finite-sample MNL models.</li>
+</ul>
+</section>
 </section>
 <section id="estimation-via-bayesian-methods" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</h2>
-<div id="a4080764" class="cell" data-execution_count="5">
+<div id="1210fc7b" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -546,7 +561,7 @@ Step 9000: log-posterior = -2284.94
 Step 10000: log-posterior = -2285.55</code></pre>
 </div>
 </div>
-<div id="6b2a4ce2" class="cell" data-execution_count="6">
+<div id="ecb8c095" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
@@ -579,7 +594,7 @@ Step 10000: log-posterior = -2285.55</code></pre>
 </div>
 </div>
 </div>
-<div id="87d3afb2" class="cell" data-execution_count="7">
+<div id="99234058" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>param_names <span class="op">=</span> [<span class="st">"beta_netflix"</span>, <span class="st">"beta_prime"</span>, <span class="st">"beta_ads"</span>, <span class="st">"beta_price"</span>]</span>
@@ -599,6 +614,12 @@ beta_ads           -0.476692      0.067661     -0.608999     -0.346079
 beta_price         -0.063835      0.004467     -0.072503     -0.055189</code></pre>
 </div>
 </div>
+<section id="posterior-diagnostics-for-beta_price" class="level3">
+<h3 class="anchored" data-anchor-id="posterior-diagnostics-for-beta_price">Posterior Diagnostics for <code>beta_price</code></h3>
+<p>The <strong>trace plot</strong> for <code>beta_price</code> shows good mixing and stability over the 10,000 retained MCMC samples. The chain fluctuates around a consistent mean without drifting, suggesting convergence to the posterior distribution.</p>
+<p>The <strong>posterior distribution</strong> is approximately normal, centered around –0.065, indicating a clear negative effect of price on utility. The distribution is tight, which reflects high certainty about the price sensitivity.</p>
+<p>These diagnostics confirm that the Metropolis-Hastings sampler performed well and that <code>beta_price</code> is reliably estimated from the data.</p>
+</section>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">6. Discussion</h2>
@@ -630,7 +651,6 @@ U_{ij} = x_{ij}' \beta_i + \epsilon_{ij}
 \]</span></li>
 </ul>
 <p>This reflects real-world behavior more accurately, since different people value price and features differently.</p>
-<hr>
 </section>
 <section id="estimation-changes" class="level3">
 <h3 class="anchored" data-anchor-id="estimation-changes">Estimation Changes</h3>
@@ -646,7 +666,6 @@ U_{ij} = x_{ij}' \beta_i + \epsilon_{ij}
 </ul></li>
 </ul>
 <p>We can implement this in tools like <strong>Stan</strong>, <strong>PyMC</strong>, or via custom code if needed.</p>
-<hr>
 </section>
 <section id="why-use-hierarchical-models" class="level3">
 <h3 class="anchored" data-anchor-id="why-use-hierarchical-models">Why Use Hierarchical Models?</h3>

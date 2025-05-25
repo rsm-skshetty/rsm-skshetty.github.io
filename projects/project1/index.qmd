@@ -1,7 +1,7 @@
 ---
 title: "A Replication of Karlan and List (2007)"
 author: "Samiksha Shetty"
-date: today
+date: 04/19/2025
 callout-appearance: minimal # this hides the blue "i" icon on .callout-notes
 ---
 
