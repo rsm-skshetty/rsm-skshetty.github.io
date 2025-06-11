@@ -79,8 +79,6 @@ print(mnl_result.summary())
 ```
 
 
-### 1.3 Results & Interpretation
-
 The model converged successfully and estimated the impact of price and promotional features on yogurt choice.
 
 | Variable  | Coefficient | Interpretation |
@@ -90,9 +88,10 @@ The model converged successfully and estimated the impact of price and promotion
 
 The log-likelihood of the model is **−5369.8**. We’ll use this for BIC comparison later.
 
+### 1.3 Latent-Class MNL Estimation
+In this section, we extend the standard MNL model to a **Latent-Class MNL (LC-MNL)** model. This approach allows us to capture heterogeneity in consumer preferences by segmenting the population into latent classes, each with its own utility parameters.
+
 ```{python}
-#| code-fold: true
-#| code-summary: "Click to expand Python code"
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -234,36 +233,37 @@ The 5-segment model achieves the **lowest BIC**, indicating the best balance bet
 In comparison, the standard MNL model had a log-likelihood of **−5369.8**, showing that accounting for latent heterogeneity significantly improves predictive performance.
 
 ```{python}
-# Final interpretation for K=5
+# Step 1: Get segment-level LC-MNL results
 segment_df, segment_sizes = final_segment_analysis(long_df)
-print(segment_df)
-print(segment_sizes)
+
+# Step 2: Fit and append aggregate MNL
+mnl_model = smf.mnlogit("choice ~ price + feature", data=long_df)
+mnl_result = mnl_model.fit()
+agg_params = mnl_result.params[0] # for class 1
+
+aggregate_row = pd.DataFrame({
+    'price_coef': [agg_params['price']],
+    'feature_coef': [agg_params['feature']]
+}, index=['Aggregate MNL'])
+
+# Step 3: Combine all
+comparison_df = pd.concat([segment_df, aggregate_row])
+print(comparison_df)
 ```
-
-
-### 1.5 Segment Interpretation
 
 After fitting the latent-class multinomial logit model with 5 segments, we analyze how different consumer segments respond to price and promotional advertising (feature displays). The table below shows the estimated coefficients for each segment:
 
 **Key Takeaways:**
 
-- All five segments are highly price-sensitive, with price coefficients ranging from −8.86 to −8.98. This implies that, across the board, consumers strongly prefer lower-priced yogurt options.
-- There is some heterogeneity in feature responsiveness:
-  - **Segment 3** is the **most responsive to advertising**, with a feature coefficient of 0.42.
-  - **Segment 4** is the **least responsive**, with a coefficient of only 0.18.
-- The segment sizes are nearly uniform (about 20% each), indicating a clean clustering from the EM algorithm without dominance from any one group.
+- All segments are **highly price-sensitive** (negative coefficients), while the aggregate MNL shows a **positive price coefficient**, likely due to misspecification or label flipping. This is a red flag that the aggregate model may be misleading.
+- **Segment 2 and Segment 5** show the strongest **promotion responsiveness**, with feature coefficients above 0.4.
+- **Segment 3** appears **least responsive to promotions**, with a coefficient of just 0.14.
+- The **aggregate model significantly overstates the feature effect**, and distorts the price effect entirely, reinforcing the need for a segmentation-based approach.
+
+The aggregate MNL model smooths over meaningful heterogeneity in consumer behavior. In contrast, the latent-class model reveals **distinct clusters** of customers with varying sensitivities — a critical insight for targeted marketing and pricing strategies.
 
 
-### 1.6 Implications
-
-This segmentation offers useful guidance for targeted marketing:
-- If aiming to boost volume through price promotions, all segments are likely to respond.
-- If focusing on feature advertising, then Segment 3 offers the highest return on promotion exposure, whereas Segment 4 might not justify the effort.
-
-These results demonstrate the power of latent-class models: they surface **hidden heterogeneity** in consumer preferences that a single MNL model cannot capture.
-
-
-### 1.7 Conclusion
+### 1.5 Conclusion
 
 In this section, we used the Yogurt dataset to explore heterogeneity in consumer preferences using both a standard multinomial logit model (MNL) and a more flexible Latent-Class MNL (LC-MNL).
 
@@ -272,8 +272,10 @@ The standard MNL model provided a baseline view — assuming all consumers have 
 This segmentation revealed important insights:
 
 - All segments exhibited **strong price sensitivity**, as expected in commoditized categories like yogurt.
-- Segments differed meaningfully in their responsiveness to in-store **feature promotions** — with **Segment 3** most responsive, and **Segment 4** the least.
+- Segments differed meaningfully in their responsiveness to in-store **feature promotions** — with **Segment 2 and Segment 5** showing the highest responsiveness, and **Segment 3** the least.
 - Posterior class probabilities indicated that segment sizes were **nearly uniform**, reinforcing the stability of the EM algorithm's fit.
+
+A comparison between the **aggregate MNL** and the **LC-MNL** further illustrates the value of segmentation. While the aggregate model estimated an unexpected **positive price coefficient (+11.88)** — a likely artifact of model misfit — the LC-MNL segments all showed **negative price sensitivity**, in line with economic theory. Similarly, the aggregate model overstated the effect of promotions. These discrepancies underscore how **averaging across heterogeneous consumers can distort managerial conclusions**.
 
 #### Why This Matters
 
@@ -284,8 +286,6 @@ Using LC-MNL allowed us to uncover **distinct consumer subgroups** that a single
 - Personalized marketing messaging
 
 Our final visualizations — including the scatter plot of segment-level price vs feature sensitivity — help bring these behavioral differences to life.
-
-#### Takeaway
 
 The LC-MNL model doesn’t just fit better — it **tells a better story**. It shows us that not all customers are alike, and that modeling heterogeneity is essential for actionable insights. Whether in retail, finance, or tech, this approach has broad applicability for uncovering who your customers are — and what they respond to.
 
