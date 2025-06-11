@@ -1,5 +1,5 @@
 ---
-title: "Measuring Customer Satisfaction : A Multi-Method Approach"
+title: "Capturing Consumer Heterogeneity with Latent-Class MNL and Key Drivers Analysis"
 author: "Samiksha Shetty"
 date: 06/09/2025
 ---
