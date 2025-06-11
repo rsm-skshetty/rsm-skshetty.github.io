@@ -9,7 +9,7 @@
 <meta name="author" content="Samiksha Shetty">
 <meta name="dcterms.date" content="2025-06-09">
 
-<title>Measuring Customer Satisfaction : A Multi-Method Approach – Samiksha’s Website</title>
+<title>Capturing Consumer Heterogeneity with Latent-Class MNL and Key Drivers Analysis – Samiksha’s Website</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -159,11 +159,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">1.1 Dataset Description</a></li>
   <li><a href="#standard-mnl-estimation" id="toc-standard-mnl-estimation" class="nav-link" data-scroll-target="#standard-mnl-estimation">1.2 Standard MNL Estimation</a></li>
-  <li><a href="#results-interpretation" id="toc-results-interpretation" class="nav-link" data-scroll-target="#results-interpretation">1.3 Results &amp; Interpretation</a></li>
+  <li><a href="#latent-class-mnl-estimation" id="toc-latent-class-mnl-estimation" class="nav-link" data-scroll-target="#latent-class-mnl-estimation">1.3 Latent-Class MNL Estimation</a></li>
   <li><a href="#model-comparison-latent-class-mnl-vs.-standard-mnl" id="toc-model-comparison-latent-class-mnl-vs.-standard-mnl" class="nav-link" data-scroll-target="#model-comparison-latent-class-mnl-vs.-standard-mnl">1.4 Model Comparison: Latent-Class MNL vs.&nbsp;Standard MNL</a></li>
-  <li><a href="#segment-interpretation" id="toc-segment-interpretation" class="nav-link" data-scroll-target="#segment-interpretation">1.5 Segment Interpretation</a></li>
-  <li><a href="#implications" id="toc-implications" class="nav-link" data-scroll-target="#implications">1.6 Implications</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">1.7 Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">1.5 Conclusion</a></li>
   </ul></li>
   <li><a href="#part-2-key-drivers-analysis-a-multi-method-perspective" id="toc-part-2-key-drivers-analysis-a-multi-method-perspective" class="nav-link" data-scroll-target="#part-2-key-drivers-analysis-a-multi-method-perspective">Part 2: Key Drivers Analysis — A Multi-Method Perspective</a>
   <ul class="collapse">
@@ -179,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Measuring Customer Satisfaction : A Multi-Method Approach</h1>
+<h1 class="title">Capturing Consumer Heterogeneity with Latent-Class MNL and Key Drivers Analysis</h1>
 </div>
 
 
@@ -220,8 +218,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>f1</code> to <code>f4</code>: Whether each yogurt option was featured in-store (e.g., on display or advertised)</li>
 <li><code>p1</code> to <code>p4</code>: Prices per ounce for each yogurt option</li>
 </ul>
-<p>We’ll reshape this data from <strong>wide</strong> format to <strong>long</strong> format so that each row represents a consumer–choice pair.</p>
-<div id="1670f9b8" class="cell" data-execution_count="1">
+<p>We’ll reshape this data from wide format to long format so that each row represents a consumer–choice pair.</p>
+<div id="586f5eed" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
@@ -246,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset index</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>long_df <span class="op">=</span> long_df.sort_values([<span class="st">'id'</span>, <span class="st">'alt'</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="968c09d7" class="cell" data-execution_count="2">
+<div id="47651daf" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>long_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -321,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Feature Display</strong>: A binary variable indicating in-store promotion</li>
 </ul>
 <p>We use the <code>mnlogit()</code> function to estimate the model using maximum likelihood. The results are summarized below.</p>
-<div id="a1a79b44" class="cell" data-execution_count="3">
+<div id="0068e9e6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -341,8 +339,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Dep. Variable:                 choice   No. Observations:                 9720
 Model:                        MNLogit   Df Residuals:                     9717
 Method:                           MLE   Df Model:                            2
-Date:                Mon, 09 Jun 2025   Pseudo R-squ.:                 0.01758
-Time:                        21:03:37   Log-Likelihood:                -5369.8
+Date:                Wed, 11 Jun 2025   Pseudo R-squ.:                 0.01758
+Time:                        10:26:27   Log-Likelihood:                -5369.8
 converged:                       True   LL-Null:                       -5465.9
 Covariance Type:            nonrobust   LLR p-value:                 1.835e-42
 ==============================================================================
@@ -354,9 +352,6 @@ feature        0.9917      0.105      9.474      0.000       0.787       1.197
 ==============================================================================</code></pre>
 </div>
 </div>
-</section>
-<section id="results-interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="results-interpretation">1.3 Results &amp; Interpretation</h3>
 <p>The model converged successfully and estimated the impact of price and promotional features on yogurt choice.</p>
 <table class="caption-top table">
 <colgroup>
@@ -385,9 +380,11 @@ feature        0.9917      0.105      9.474      0.000       0.787       1.197
 </tbody>
 </table>
 <p>The log-likelihood of the model is <strong>−5369.8</strong>. We’ll use this for BIC comparison later.</p>
-<div id="faf65964" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Click to expand Python code</summary>
+</section>
+<section id="latent-class-mnl-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="latent-class-mnl-estimation">1.3 Latent-Class MNL Estimation</h3>
+<p>In this section, we extend the standard MNL model to a <strong>Latent-Class MNL (LC-MNL)</strong> model. This approach allows us to capture heterogeneity in consumer preferences by segmenting the population into latent classes, each with its own utility parameters.</p>
+<div id="eafa113a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -503,22 +500,21 @@ feature        0.9917      0.105      9.474      0.000       0.787       1.197
 <span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>    segment_sizes <span class="op">=</span> segment_sizes.to_frame(name<span class="op">=</span><span class="st">"Average Responsibility"</span>)</span>
 <span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> segment_df, segment_sizes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
-<div id="74ee5568" class="cell" data-execution_count="5">
+<div id="05d3264a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run model selection</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> run_bic_analysis(long_df)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_df.sort_values(<span class="st">"BIC"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>K=2: LL=-3500.60, BIC=7032.37
-K=3: LL=-3502.93, BIC=7052.63
-K=4: LL=-3495.76, BIC=7053.89
-K=5: LL=-3484.02, BIC=7046.00
+<pre><code>K=2: LL=-3519.35, BIC=7069.88
+K=3: LL=-3506.16, BIC=7059.09
+K=4: LL=-3495.18, BIC=7052.73
+K=5: LL=-3486.36, BIC=7050.68
    K  LogLikelihood          BIC
-0  2   -3500.596087  7032.374760
-3  5   -3484.024031  7046.004527
-1  3   -3502.927015  7052.627909
-2  4   -3495.764731  7053.894634</code></pre>
+3  5   -3486.361118  7050.678701
+2  4   -3495.181987  7052.729147
+1  3   -3506.157121  7059.088122
+0  2   -3519.350276  7069.883139</code></pre>
 </div>
 </div>
 </section>
@@ -558,57 +554,57 @@ K=5: LL=-3484.02, BIC=7046.00
 </table>
 <p>The 5-segment model achieves the <strong>lowest BIC</strong>, indicating the best balance between model complexity and goodness-of-fit.</p>
 <p>In comparison, the standard MNL model had a log-likelihood of <strong>−5369.8</strong>, showing that accounting for latent heterogeneity significantly improves predictive performance.</p>
-<div id="a49572b5" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Final interpretation for K=5</span></span>
+<div id="1fb2a518" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Get segment-level LC-MNL results</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>segment_df, segment_sizes <span class="op">=</span> final_segment_analysis(long_df)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(segment_df)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(segment_sizes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Fit and append aggregate MNL</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>mnl_model <span class="op">=</span> smf.mnlogit(<span class="st">"choice ~ price + feature"</span>, data<span class="op">=</span>long_df)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>mnl_result <span class="op">=</span> mnl_model.fit()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>agg_params <span class="op">=</span> mnl_result.params[<span class="dv">0</span>] <span class="co"># for class 1</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>aggregate_row <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'price_coef'</span>: [agg_params[<span class="st">'price'</span>]],</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'feature_coef'</span>: [agg_params[<span class="st">'feature'</span>]]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>}, index<span class="op">=</span>[<span class="st">'Aggregate MNL'</span>])</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Combine all</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.concat([segment_df, aggregate_row])</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(comparison_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           price_coef  feature_coef
-segment                            
-Segment 1   -8.877834      0.225067
-Segment 2   -8.880982      0.231919
-Segment 3   -8.865218      0.197510
-Segment 4   -8.974479      0.411727
-Segment 5   -8.977715      0.416838
-           Average Responsibility
-Segment 1                0.199822
-Segment 2                0.199839
-Segment 3                0.199755
-Segment 4                0.200286
-Segment 5                0.200299</code></pre>
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.552448
+         Iterations 5
+               price_coef  feature_coef
+Segment 1       -8.987199      0.432264
+Segment 2       -8.979381      0.419802
+Segment 3       -8.875328      0.220073
+Segment 4       -8.893000      0.258463
+Segment 5       -8.889896      0.146809
+Aggregate MNL   11.876118      0.991702</code></pre>
 </div>
 </div>
-</section>
-<section id="segment-interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="segment-interpretation">1.5 Segment Interpretation</h3>
 <p>After fitting the latent-class multinomial logit model with 5 segments, we analyze how different consumer segments respond to price and promotional advertising (feature displays). The table below shows the estimated coefficients for each segment:</p>
 <p><strong>Key Takeaways:</strong></p>
 <ul>
-<li>All five segments are highly price-sensitive, with price coefficients ranging from −8.86 to −8.98. This implies that, across the board, consumers strongly prefer lower-priced yogurt options.</li>
-<li>There is some heterogeneity in feature responsiveness:
-<ul>
-<li><strong>Segment 3</strong> is the <strong>most responsive to advertising</strong>, with a feature coefficient of 0.42.</li>
-<li><strong>Segment 4</strong> is the <strong>least responsive</strong>, with a coefficient of only 0.18.</li>
-</ul></li>
-<li>The segment sizes are nearly uniform (about 20% each), indicating a clean clustering from the EM algorithm without dominance from any one group.</li>
+<li>All segments are <strong>highly price-sensitive</strong> (negative coefficients), while the aggregate MNL shows a <strong>positive price coefficient</strong>, likely due to misspecification or label flipping. This is a red flag that the aggregate model may be misleading.</li>
+<li><strong>Segment 2 and Segment 5</strong> show the strongest <strong>promotion responsiveness</strong>, with feature coefficients above 0.4.</li>
+<li><strong>Segment 3</strong> appears <strong>least responsive to promotions</strong>, with a coefficient of just 0.14.</li>
+<li>The <strong>aggregate model significantly overstates the feature effect</strong>, and distorts the price effect entirely, reinforcing the need for a segmentation-based approach.</li>
 </ul>
-</section>
-<section id="implications" class="level3">
-<h3 class="anchored" data-anchor-id="implications">1.6 Implications</h3>
-<p>This segmentation offers useful guidance for targeted marketing: - If aiming to boost volume through price promotions, all segments are likely to respond. - If focusing on feature advertising, then Segment 3 offers the highest return on promotion exposure, whereas Segment 4 might not justify the effort.</p>
-<p>These results demonstrate the power of latent-class models: they surface <strong>hidden heterogeneity</strong> in consumer preferences that a single MNL model cannot capture.</p>
+<p>The aggregate MNL model smooths over meaningful heterogeneity in consumer behavior. In contrast, the latent-class model reveals <strong>distinct clusters</strong> of customers with varying sensitivities — a critical insight for targeted marketing and pricing strategies.</p>
 </section>
 <section id="conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="conclusion">1.7 Conclusion</h3>
+<h3 class="anchored" data-anchor-id="conclusion">1.5 Conclusion</h3>
 <p>In this section, we used the Yogurt dataset to explore heterogeneity in consumer preferences using both a standard multinomial logit model (MNL) and a more flexible Latent-Class MNL (LC-MNL).</p>
 <p>The standard MNL model provided a baseline view — assuming all consumers have identical preferences — and yielded a log-likelihood of −5369.8. However, by fitting LC-MNL models with 2 through 5 segments and comparing them using the Bayesian Information Criterion (BIC), we found that the model with 5 latent classes best balanced fit and complexity.</p>
 <p>This segmentation revealed important insights:</p>
 <ul>
 <li>All segments exhibited <strong>strong price sensitivity</strong>, as expected in commoditized categories like yogurt.</li>
-<li>Segments differed meaningfully in their responsiveness to in-store <strong>feature promotions</strong> — with <strong>Segment 3</strong> most responsive, and <strong>Segment 4</strong> the least.</li>
+<li>Segments differed meaningfully in their responsiveness to in-store <strong>feature promotions</strong> — with <strong>Segment 2 and Segment 5</strong> showing the highest responsiveness, and <strong>Segment 3</strong> the least.</li>
 <li>Posterior class probabilities indicated that segment sizes were <strong>nearly uniform</strong>, reinforcing the stability of the EM algorithm’s fit.</li>
 </ul>
+<p>A comparison between the <strong>aggregate MNL</strong> and the <strong>LC-MNL</strong> further illustrates the value of segmentation. While the aggregate model estimated an unexpected <strong>positive price coefficient (+11.88)</strong> — a likely artifact of model misfit — the LC-MNL segments all showed <strong>negative price sensitivity</strong>, in line with economic theory. Similarly, the aggregate model overstated the effect of promotions. These discrepancies underscore how <strong>averaging across heterogeneous consumers can distort managerial conclusions</strong>.</p>
 <section id="why-this-matters" class="level4">
 <h4 class="anchored" data-anchor-id="why-this-matters">Why This Matters</h4>
 <p>Using LC-MNL allowed us to uncover <strong>distinct consumer subgroups</strong> that a single-model approach would have masked. In practice, this kind of modeling supports:</p>
@@ -618,9 +614,6 @@ Segment 5                0.200299</code></pre>
 <li>Personalized marketing messaging</li>
 </ul>
 <p>Our final visualizations — including the scatter plot of segment-level price vs feature sensitivity — help bring these behavioral differences to life.</p>
-</section>
-<section id="takeaway" class="level4">
-<h4 class="anchored" data-anchor-id="takeaway">Takeaway</h4>
 <p>The LC-MNL model doesn’t just fit better — it <strong>tells a better story</strong>. It shows us that not all customers are alike, and that modeling heterogeneity is essential for actionable insights. Whether in retail, finance, or tech, this approach has broad applicability for uncovering who your customers are — and what they respond to.</p>
 </section>
 </section>
@@ -757,7 +750,7 @@ Segment 5                0.200299</code></pre>
 </tbody>
 </table>
 <p>The table below summarizes the results for these eight metrics:</p>
-<div id="46d2c252" class="cell" data-execution_count="7">
+<div id="cf070d45" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Click to expand Python code (Pearson R², Standardized Coefficients)</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">"data_for_drivers_analysis.csv"</span></span>
@@ -790,7 +783,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.concat([pearson_r2, standardized_coefs], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="95d02c1e" class="cell" data-execution_count="8">
+<div id="223a5bdc" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Click to expand Python code (Usefulness)</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
@@ -814,7 +807,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">"Usefulness (ΔR²)"</span>] <span class="op">=</span> usefulness_series</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="ec19a060" class="cell" data-execution_count="9">
+<div id="0cd8351e" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Click to expand Python code (Johnson’s Relative Weights)</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -847,7 +840,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">"Johnson's Relative Weights"</span>] <span class="op">=</span> johnson_weights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="6f4f5f57" class="cell" data-execution_count="10">
+<div id="ccbdea66" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Click to expand Python code (Random Forest Gini Importance)</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
@@ -863,7 +856,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">"RF Gini Importance"</span>] <span class="op">=</span> rf_importances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="dd5096cc" class="cell" data-execution_count="11">
+<div id="1e737b41" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Click to expand Python code (SHAP Values using LinearExplainer)</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
@@ -897,7 +890,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">"SHAP Importance"</span>] <span class="op">=</span> shap_importance[<span class="st">"SHAP Importance"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="4e82a161" class="cell" data-execution_count="12">
+<div id="5e6d1915" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Click to expand Python code (XGBoost Importance)</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
@@ -918,7 +911,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">"XGBoost Importance"</span>] <span class="op">=</span> xgb_importance_series</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="2a4948c2" class="cell" data-execution_count="13">
+<div id="6eb07227" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Click to expand Python code (Neural Network Permutation Importance)</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPRegressor</span>
@@ -938,7 +931,7 @@ Segment 5                0.200299</code></pre>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">"NN Importance"</span>] <span class="op">=</span> nn_importance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="dccf0522" class="cell" data-execution_count="14">
+<div id="2da04ee7" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finalize results table</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> results_df.sort_values(by<span class="op">=</span><span class="st">"Pearson R²"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> results_df.<span class="bu">round</span>(<span class="dv">3</span>)  <span class="co"># Round for better readability</span></span>
@@ -1076,7 +1069,7 @@ Segment 5                0.200299</code></pre>
 <li><strong>Popular</strong> and <strong>Rewarding</strong> have lower scores in linear methods but appear more influential in tree-based and neural models, suggesting <strong>nonlinear or interaction-based effects</strong>.</li>
 </ul>
 <p>This multi-angle approach provides a robust, interpretable, and machine-learning-enhanced view of which features truly influence satisfaction — a valuable framework for product development, UX, and targeted marketing.</p>
-<div id="ce496327" class="cell" data-execution_count="15">
+<div id="fdbf1fbc" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
