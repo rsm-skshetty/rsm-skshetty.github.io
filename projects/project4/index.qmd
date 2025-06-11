@@ -18,7 +18,7 @@ The dataset includes anonymized purchase records from yogurt shoppers, with each
 - `f1` to `f4`: Whether each yogurt option was featured in-store (e.g., on display or advertised)
 - `p1` to `p4`: Prices per ounce for each yogurt option
 
-We’ll reshape this data from **wide** format to **long** format so that each row represents a consumer–choice pair.
+We’ll reshape this data from wide format to long format so that each row represents a consumer–choice pair.
 
 ```{python}
 import pandas as pd
